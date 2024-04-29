@@ -1,6 +1,5 @@
 {
   "name": "ssi-issuer-elements",
-  "private": true,
   "version": "0.0.0",
   "repository": {
     "type": "git",
