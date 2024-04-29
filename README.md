@@ -9,6 +9,12 @@
 
 This library provides components that can be used to display a qr code to transfer a proof to the ssimply wallet.
 
+## Installation
+
+```bash
+pnpm install @ubique-innovation/ssi-issuer-elements
+```
+
 ## Usage
 
 The components can either be included using browser-native web components or with the generated react components.
