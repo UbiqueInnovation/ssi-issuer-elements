@@ -15,7 +15,7 @@ dependencies:
     specifier: ^1.5.3
     version: 1.5.3
   react:
-    specifier: ^18.3.1
+    specifier: ^18
     version: 18.3.1
 
 devDependencies:
