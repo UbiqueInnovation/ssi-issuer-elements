@@ -1,3 +1,4 @@
+import react from "@vitejs/plugin-react";
 import { isAbsolute, resolve } from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
@@ -25,9 +26,10 @@ export default defineConfig({
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM",
         },
       },
     },
   },
-  plugins: [dts()],
+  plugins: [react(), dts()],
 });
