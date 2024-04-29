@@ -5,9 +5,9 @@ function isExternal(id: string) {
   return !id.startsWith(".") && !isAbsolute(id);
 }
 
-type LibTypes = "transfer-proof" | "react";
+type LibTypes = "main" | "transfer-proof" | "react";
 
-const LIB: LibTypes = (process.env.LIB as LibTypes) ?? "react";
+const LIB: LibTypes = (process.env.LIB as LibTypes) ?? "main";
 
 export default defineConfig({
   build: {
@@ -21,6 +21,11 @@ export default defineConfig({
     },
     rollupOptions: {
       external: isExternal,
+      output: {
+        globals: {
+          react: "React",
+        },
+      },
     },
   },
 });
