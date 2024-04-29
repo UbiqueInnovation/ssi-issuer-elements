@@ -21,21 +21,13 @@ export class SsiTransferProof extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    const checkIfActive = async () => {
-      const { active } = await fetch(
-        new URL(
-          `/v1/connectionInfo?transactionId=${this.transactionId}`,
-          "https://ssi-issuer-backend-ws-dev.ubique.ch"
-        )
-      ).then((res) => res.json());
-      if (active) {
-        this.isActive = true;
-        clearInterval(this.timer);
-      }
-    };
+    this.timer = window.setInterval(this._checkIfActive, 2000);
+  }
 
-    checkIfActive();
-    this.timer = window.setInterval(checkIfActive, 2000);
+  firstUpdated(changedProperties: Map<"transactionId", unknown>): void {
+    if (changedProperties.has("transactionId")) {
+      this._checkIfActive();
+    }
   }
 
   disconnectedCallback() {
@@ -119,6 +111,21 @@ export class SsiTransferProof extends LitElement {
           </ssi-card>
         `;
   }
+
+  private _checkIfActive = async () => {
+    if (this.transactionId) {
+      const { active } = await fetch(
+        new URL(
+          `/v1/connectionInfo?transactionId=${this.transactionId}`,
+          "https://ssi-issuer-backend-ws-dev.ubique.ch"
+        )
+      ).then((res) => res.json());
+      if (active) {
+        this.isActive = true;
+        clearInterval(this.timer);
+      }
+    }
+  };
 
   static styles = css`
     ${GLOBAL_CSS}

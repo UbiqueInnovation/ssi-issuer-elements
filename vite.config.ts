@@ -1,5 +1,6 @@
 import { isAbsolute, resolve } from "path";
 import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 function isExternal(id: string) {
   return !id.startsWith(".") && !isAbsolute(id);
@@ -28,4 +29,5 @@ export default defineConfig({
       },
     },
   },
+  plugins: [dts()],
 });
