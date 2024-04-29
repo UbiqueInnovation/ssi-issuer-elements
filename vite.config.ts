@@ -1,11 +1,7 @@
 import react from "@vitejs/plugin-react";
-import { isAbsolute, resolve } from "path";
+import { resolve } from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
-
-function isExternal(id: string) {
-  return !id.startsWith(".") && !isAbsolute(id);
-}
 
 type LibTypes = "main" | "transfer-proof" | "react";
 
@@ -22,7 +18,7 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
-      external: isExternal,
+      external: ["react", "react-dom"],
       output: {
         globals: {
           react: "React",

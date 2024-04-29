@@ -2,6 +2,10 @@
   "name": "ssi-issuer-elements",
   "private": true,
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UbiqueInnovation/ssi-issuer-elements.git"
+  },
   "type": "module",
   "files": [
     "dist"
