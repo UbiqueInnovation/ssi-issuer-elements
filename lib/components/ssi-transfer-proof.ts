@@ -185,6 +185,7 @@ export class SsiTransferProof extends LitElement {
       align-items: center;
       gap: 0.75rem;
       max-width: 180px;
+      margin-inline: auto;
     }
 
     .actions__item img {
