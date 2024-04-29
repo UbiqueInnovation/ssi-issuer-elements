@@ -1,4 +1,4 @@
-name: Build on Tag
+name: Publish on Tag
 on:
   push:
     tags: [v*]
