@@ -1,10 +1,14 @@
 {
-  "name": "ssi-issuer-elements",
-  "version": "0.0.5",
+  "name": "@ubique-innovation/ssi-issuer-elements",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/UbiqueInnovation/ssi-issuer-elements.git"
   },
+  "keywords": [
+    "Ubique Innovation AG",
+    "ssimply Wallet"
+  ],
   "type": "module",
   "files": [
     "dist"

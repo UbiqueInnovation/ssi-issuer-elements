@@ -1,9 +1,16 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-<mask id="mask0_1_14" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="59" width="512" height="393">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M272.717 135.986L157.028 59L0 294.972L235.972 452L276.175 391.585L365.755 436.263L511.048 340.123L500.436 166.225L344.53 88.4676L272.717 135.986ZM272.717 135.986L199.236 184.607L209.849 358.505L276.175 391.585L393 216.028L272.717 135.986Z" fill="white"/>
+<svg width="512" height="393" viewBox="0 0 512 393" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_410_126)">
+<mask id="mask0_410_126" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="393">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M272.717 76.986L157.028 0L0 235.972L235.972 393L276.175 332.585L365.755 377.263L511.048 281.123L500.436 107.225L344.53 29.4676L272.717 76.986ZM272.717 76.986L199.236 125.607L209.849 299.505L276.175 332.585L393 157.028L272.717 76.986Z" fill="white"/>
 </mask>
-<g mask="url(#mask0_1_14)">
-<rect x="157.028" y="59" width="283.444" height="283.444" transform="rotate(33.6419 157.028 59)" fill="#0080FF"/>
-<path d="M344.529 88.4676L500.436 166.225L511.048 340.123L365.755 436.263L209.849 358.505L199.236 184.607L344.529 88.4676Z" fill="#273C56"/>
+<g mask="url(#mask0_410_126)">
+<path d="M393 157.028L157.028 0L-0.000101832 235.972L235.972 393L393 157.028Z" fill="#0080FF"/>
+<path d="M344.529 29.4675L500.436 107.225L511.048 281.123L365.755 377.263L209.849 299.505L199.236 125.607L344.529 29.4675Z" fill="#273C56"/>
 </g>
+</g>
+<defs>
+<clipPath id="clip0_410_126">
+<rect width="512" height="393" fill="white"/>
+</clipPath>
+</defs>
 </svg>

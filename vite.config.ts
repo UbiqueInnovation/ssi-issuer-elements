@@ -3,9 +3,7 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
-type LibTypes = "main" | "transfer-proof" | "react";
-
-const LIB: LibTypes = (process.env.LIB as LibTypes) ?? "main";
+const LIB = process.env.LIB ?? "main";
 
 export default defineConfig({
   build: {
