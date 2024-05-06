@@ -5,6 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ssi Issuer Elements</title>
+    <script type="module">
+      import { config } from "/lib/main.ts";
+      config.init({
+        baseUrl: "https://ssi-issuer-backend-ws-dev.ubique.ch",
+      });
+    </script>
     <script type="module" src="/lib/transfer-proof.ts"></script>
   </head>
   <body style="margin: 0">
@@ -17,8 +23,7 @@
       "
     >
       <ssi-transfer-proof
-        baseUrl="https://ssi-issuer-backend-ws-dev.ubique.ch"
-        token="eyJpc3N1ZWRBdCI6MTcxNDk5NjIwODQyOCwiZXhwaXJlc0F0IjoxNzE0OTk2NTA4NDI4LCJkYXRhIjp7InNjaGVtYUlkZW50aWZpZXIiOnsiY3JlZGVudGlhbElkZW50aWZpZXIiOiJHdWlkZUNhcmQiLCJ2ZXJzaW9uIjoiMC4wLjEifSwiYXR0cmlidXRlcyI6eyJOYW1lIjp7InZhbHVlIjoiTWlja3kiLCJhdHRyaWJ1dGVUeXBlIjoiU1RSSU5HIn0sIlZvcm5hbWVuIjp7InZhbHVlIjoiTWF1cyIsImF0dHJpYnV0ZVR5cGUiOiJTVFJJTkcifSwiRGF0ZW9mQmlydGgiOnsidmFsdWUiOiIxOTcwMDEwMSIsImF0dHJpYnV0ZVR5cGUiOiJTVFJJTkcifX19LCJzaWduYXR1cmVUaW1lc3RhbXAiOjE3MTQ5OTYyMDg0Mjh9LjZMdDFxeUI3MjFBbHFhcU83ZVZic0pOWlpSZnBvdkdhZ25sSVVKMnVuK0U9"
+        token="eyJpc3N1ZWRBdCI6MTcxNTAwODY5ODU2MiwiZXhwaXJlc0F0IjoxNzE1MDA4OTk4NTYyLCJkYXRhIjp7InNjaGVtYUlkZW50aWZpZXIiOnsiY3JlZGVudGlhbElkZW50aWZpZXIiOiJHdWlkZUNhcmQiLCJ2ZXJzaW9uIjoiMC4wLjEifSwiYXR0cmlidXRlcyI6eyJOYW1lIjp7InZhbHVlIjoiTWlja3kiLCJhdHRyaWJ1dGVUeXBlIjoiU1RSSU5HIn0sIlZvcm5hbWVuIjp7InZhbHVlIjoiTWF1cyIsImF0dHJpYnV0ZVR5cGUiOiJTVFJJTkcifSwiRGF0ZW9mQmlydGgiOnsidmFsdWUiOiIyMDAwMDEwMSIsImF0dHJpYnV0ZVR5cGUiOiJTVFJJTkcifX19LCJzaWduYXR1cmVUaW1lc3RhbXAiOjE3MTUwMDg2OTg1NjJ9LlBER3lhS05MSnQ4OWNjMGtnT0NoNDlXRnVVbUxGU2t6WUlNekd1dHlDWlU9"
       >
         <button>Fertig</button>
       </ssi-transfer-proof>

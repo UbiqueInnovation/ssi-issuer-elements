@@ -21,6 +21,16 @@ The components can either be included using browser-native web components or wit
 
 If you are using React, import the components from `@ubique-innovation/ssi-issuer-elements/react`.
 
+### Setup
+
+Before including any component, be sure to initialize the global configuration:
+
+```tsx
+import { config } from "@ubique-innovation/ssi-issuer-elements";
+
+config.init({ baseUrl: "https://base.url" });
+```
+
 ## Components
 
 ### Transfer Proof
@@ -33,7 +43,7 @@ If you are using React, import the components from `@ubique-innovation/ssi-issue
 // web component
 import "@ubique-innovation/ssi-issuer-elements/transfer-proof";
 
-<ssi-transfer-proof token="your-token" baseUrl="https://base.url">
+<ssi-transfer-proof token="your-token">
   <a href="/">
     <button>Fertig</button>
   </a>
@@ -44,7 +54,7 @@ import "@ubique-innovation/ssi-issuer-elements/transfer-proof";
 // react
 import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
-<SsiTransferProof token="your-token" baseUrl="https://base.url">
+<SsiTransferProof token="your-token">
   <a href="/">
     <button>Fertig</button>
   </a>
@@ -53,10 +63,9 @@ import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
 #### Attributes
 
-| name      | type     | default | required | description                                                |
-| --------- | -------- | ------- | -------- | ---------------------------------------------------------- |
-| `token`   | `string` | –       | yes      | the token that is used to create the invite                |
-| `baseUrl` | `string` | –       | yes      | the base url to fetch the connection and active state from |
+| name    | type     | default | required | description                                 |
+| ------- | -------- | ------- | -------- | ------------------------------------------- |
+| `token` | `string` | –       | yes      | the token that is used to create the invite |
 
 #### Slot
 

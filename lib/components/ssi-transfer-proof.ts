@@ -1,16 +1,15 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { config } from "../main";
 import { GLOBAL_CSS } from "../styles/styles";
-
-import {
+import type {
   ConnectionInfoResponse,
   StartIssuingRequest,
   StartIssuingResponse,
 } from "../types";
+
 import "./ssi-card";
 import "./ssi-qrcode";
-
-export type TransferProofConfig = { baseUrl: string };
 
 /**
  * This element shows a qr code for the invitation id and checks if the code was scanned yet.
@@ -20,20 +19,19 @@ export type TransferProofConfig = { baseUrl: string };
 @customElement("ssi-transfer-proof")
 export class SsiTransferProof extends LitElement {
   @property({ type: String }) token = "";
-  @property({ type: String }) baseUrl = "";
 
   @state() currentConnection?: StartIssuingResponse | null;
   @state() isActive?: boolean;
+
   timer?: number;
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.timer = window.setInterval(this._checkIfActive, 2000);
-  }
-
-  firstUpdated(changedProperties: Map<string, unknown>): void {
-    if (changedProperties.has("token") && changedProperties.has("baseUrl")) {
-      this._startIssuing();
+  async firstUpdated(changedProperties: Map<string, unknown>) {
+    if (changedProperties.has("token")) {
+      await this._getConnection();
+      await this._checkIfActive();
+      if (!this.isActive) {
+        this.timer = window.setInterval(this._checkIfActive, 2000);
+      }
     }
   }
 
@@ -144,7 +142,7 @@ export class SsiTransferProof extends LitElement {
       const { active } = await fetch(
         new URL(
           `/v1/connectionInfo?transactionId=${this.currentConnection.transactionId}`,
-          this.baseUrl
+          config.baseUrl
         )
       ).then(async (res) =>
         res.ok
@@ -158,14 +156,14 @@ export class SsiTransferProof extends LitElement {
     }
   };
 
-  private _startIssuing = async () => {
+  private _getConnection = async () => {
     const stored = sessionStorage.getItem(`connection-${this.token}`);
     if (stored) {
       this.currentConnection = JSON.parse(stored);
     } else {
       const body: StartIssuingRequest = { token: this.token };
       const connection = (await fetch(
-        new URL("/v1/startIssuing?credentialType=ACAPY", this.baseUrl),
+        new URL("/v1/startIssuing?credentialType=ACAPY", config.baseUrl),
         {
           method: "POST",
           body: JSON.stringify(body),
@@ -184,7 +182,6 @@ export class SsiTransferProof extends LitElement {
         );
       }
     }
-    await this._checkIfActive();
   };
 
   static styles = css`
