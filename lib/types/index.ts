@@ -1,3 +1,8 @@
+export type Config = {
+  baseUrl: string;
+  init: (props: { baseUrl: string }) => void;
+};
+
 export type StartIssuingRequest = { token: string };
 export type StartIssuingResponse = {
   transactionId: string;

@@ -1,12 +1,12 @@
 import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { config } from "../main";
 import { GLOBAL_CSS } from "../styles/styles";
 import type {
   ConnectionInfoResponse,
   StartIssuingRequest,
   StartIssuingResponse,
 } from "../types";
+import { useConfig } from "../utils";
 
 import "./ssi-card";
 import "./ssi-qrcode";
@@ -24,6 +24,7 @@ export class SsiTransferProof extends LitElement {
   @state() isActive?: boolean;
 
   timer?: number;
+  config = useConfig();
 
   async firstUpdated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("token")) {
@@ -142,7 +143,7 @@ export class SsiTransferProof extends LitElement {
       const { active } = await fetch(
         new URL(
           `/v1/connectionInfo?transactionId=${this.currentConnection.transactionId}`,
-          config.baseUrl
+          this.config.baseUrl
         )
       ).then(async (res) =>
         res.ok
@@ -163,7 +164,7 @@ export class SsiTransferProof extends LitElement {
     } else {
       const body: StartIssuingRequest = { token: this.token };
       const connection = (await fetch(
-        new URL("/v1/startIssuing?credentialType=ACAPY", config.baseUrl),
+        new URL("/v1/startIssuing?credentialType=ACAPY", this.config.baseUrl),
         {
           method: "POST",
           body: JSON.stringify(body),

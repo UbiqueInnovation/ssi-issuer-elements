@@ -1,28 +1,9 @@
-class Config {
-  static instance: Config;
+import type { Config } from "./types";
 
-  private _baseUrl = "";
-
-  constructor() {
-    if (Config.instance) {
-      return Config.instance;
-    }
-
-    Config.instance = this;
-  }
-
-  get baseUrl() {
-    if (!this._baseUrl) {
-      throw new Error(
-        "The base url has not been initialized. Execute `config.init()` before reading any config properties."
-      );
-    }
-    return this._baseUrl;
-  }
-
-  init({ baseUrl }: { baseUrl: string }) {
-    this._baseUrl = baseUrl;
-  }
-}
-
-export const config = new Config();
+export const config: Config = {
+  baseUrl: "",
+  init({ baseUrl }) {
+    this.baseUrl = baseUrl;
+    window.ssiElementsConfig = this;
+  },
+};
