@@ -17,38 +17,47 @@ pnpm install @ubique-innovation/ssi-issuer-elements
 
 ## Usage
 
-The components can either be included using browser-native web components or with the generated react components.
+The components can either be included using browser-native web components or with the generated React components. If the components are used in any environment but React, use the native web components. To do so, import the script file for each web component separately.
 
-### Web components
+If you are using React, import the components from `@ubique-innovation/ssi-issuer-elements/react`.
 
-These components can be used in any environment, for example in a vue or vanilla javascript webapp.
+## Components
+
+### Transfer Proof
+
+![Transfer Proof](./.github/assets/transfer-proof.png)
+
+#### Usage
 
 ```tsx
+// web component
 import "@ubique-innovation/ssi-issuer-elements/transfer-proof";
 
-<ssi-transfer-proof
-  transaction-id="your-transaction-id"
-  invitation="https://your-invitation.url?with=parameters"
->
+<ssi-transfer-proof token="your-token" baseUrl="https://base.url">
   <a href="/">
     <button>Fertig</button>
   </a>
 </ssi-transfer-proof>;
 ```
 
-### React
-
-The components in the `/react` module were generated from the web components and can be used in a react environment.
-
 ```tsx
+// react
 import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
-<SsiTransferProof
-  transactionId="your-transaction-id"
-  invitation="https://your-invitation.url?with=parameters"
->
+<SsiTransferProof token="your-token" baseUrl="https://base.url">
   <a href="/">
     <button>Fertig</button>
   </a>
 </SsiTransferProof>;
 ```
+
+#### Attributes
+
+| name      | type     | default | required | description                                                |
+| --------- | -------- | ------- | -------- | ---------------------------------------------------------- |
+| `token`   | `string` | –       | yes      | the token that is used to create the invite                |
+| `baseUrl` | `string` | –       | yes      | the base url to fetch the connection and active state from |
+
+#### Slot
+
+The children are inserted into the confirmation screen. This slot is intended to show a button that links to some other screen after the proof was transferred successfully.

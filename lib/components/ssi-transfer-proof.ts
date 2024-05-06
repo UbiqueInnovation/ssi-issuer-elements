@@ -2,21 +2,28 @@ import { LitElement, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { GLOBAL_CSS } from "../styles/styles";
 
+import {
+  ConnectionInfoResponse,
+  StartIssuingRequest,
+  StartIssuingResponse,
+} from "../types";
 import "./ssi-card";
 import "./ssi-qrcode";
+
+export type TransferProofConfig = { baseUrl: string };
 
 /**
  * This element shows a qr code for the invitation id and checks if the code was scanned yet.
  *
- * @slot The children of this element are shown when the qr code was scanned. Intended for a back button of some sort.
+ * @slot The children of this element are shown when the qr code was scanned. Intended for a back button of some kind.
  */
 @customElement("ssi-transfer-proof")
 export class SsiTransferProof extends LitElement {
-  @property({ type: String }) transactionId = "";
-  @property({ type: String }) invitation = "";
+  @property({ type: String }) token = "";
+  @property({ type: String }) baseUrl = "";
 
-  @state() isActive = false;
-
+  @state() currentConnection?: StartIssuingResponse | null;
+  @state() isActive?: boolean;
   timer?: number;
 
   connectedCallback() {
@@ -24,9 +31,9 @@ export class SsiTransferProof extends LitElement {
     this.timer = window.setInterval(this._checkIfActive, 2000);
   }
 
-  firstUpdated(changedProperties: Map<"transactionId", unknown>): void {
-    if (changedProperties.has("transactionId")) {
-      this._checkIfActive();
+  firstUpdated(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has("token") && changedProperties.has("baseUrl")) {
+      this._startIssuing();
     }
   }
 
@@ -49,7 +56,8 @@ export class SsiTransferProof extends LitElement {
             <slot></slot>
           </ssi-card>
         `
-      : html`
+      : this.currentConnection && this.isActive === false
+      ? html`
           <ssi-card id="root">
             <div>
               <h3 class="heading">Nachweis übertragen</h3>
@@ -60,7 +68,10 @@ export class SsiTransferProof extends LitElement {
             </div>
             <div class="qrcode">
               <div class="qrcode__container">
-                <ssi-qrcode content=${this.invitation}></ssi-qrcode>
+                <ssi-qrcode
+                  content=${this.currentConnection?.connectionInvitation
+                    .invitation_url}
+                ></ssi-qrcode>
                 <img
                   src="data:image/png;base64,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"
                   class="qrcode__wallet"
@@ -109,22 +120,71 @@ export class SsiTransferProof extends LitElement {
               </div>
             </div>
           </ssi-card>
-        `;
+        `
+      : this.currentConnection === null && this.isActive !== undefined
+      ? html`<ssi-card id="root">
+          <div>
+            <h3 class="heading">Fehler</h3>
+            <p class="subheading">
+              Beim Laden der Verbindung ist ein Fehler aufgetreten.
+            </p>
+          </div>
+          <slot></slot>
+        </ssi-card>`
+      : html`<div class="loading">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxvYWRlci1jaXJjbGUiPjxwYXRoIGQ9Ik0yMSAxMmE5IDkgMCAxIDEtNi4yMTktOC41NiIvPjwvc3ZnPg=="
+            alt=""
+          />
+        </div>`;
   }
 
   private _checkIfActive = async () => {
-    if (this.transactionId) {
+    if (this.currentConnection) {
       const { active } = await fetch(
         new URL(
-          `/v1/connectionInfo?transactionId=${this.transactionId}`,
-          "https://ssi-issuer-backend-ws-dev.ubique.ch"
+          `/v1/connectionInfo?transactionId=${this.currentConnection.transactionId}`,
+          this.baseUrl
         )
-      ).then((res) => res.json());
+      ).then(async (res) =>
+        res.ok
+          ? ((await res.json()) as ConnectionInfoResponse)
+          : { active: false }
+      );
+      this.isActive = active;
       if (active) {
-        this.isActive = true;
         clearInterval(this.timer);
       }
     }
+  };
+
+  private _startIssuing = async () => {
+    const stored = sessionStorage.getItem(`connection-${this.token}`);
+    if (stored) {
+      this.currentConnection = JSON.parse(stored);
+    } else {
+      const body: StartIssuingRequest = { token: this.token };
+      const connection = (await fetch(
+        new URL("/v1/startIssuing?credentialType=ACAPY", this.baseUrl),
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      ).then(async (res) =>
+        res.ok ? await res.json() : null
+      )) as StartIssuingResponse;
+      this.currentConnection = connection;
+      if (connection) {
+        sessionStorage.setItem(
+          `connection-${this.token}`,
+          JSON.stringify(connection)
+        );
+      }
+    }
+    await this._checkIfActive();
   };
 
   static styles = css`
@@ -208,6 +268,26 @@ export class SsiTransferProof extends LitElement {
     .actions__arrow img {
       width: 1.75rem;
       transform: rotate(90deg);
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading img {
+      opacity: 0.2;
+      animation: 1s infinite linear rotate;
     }
 
     @media (min-width: 640px) {
