@@ -1,5 +1,15 @@
 class Config {
+  static instance: Config;
+
   private _baseUrl = "";
+
+  constructor() {
+    if (Config.instance) {
+      return Config.instance;
+    }
+
+    Config.instance = this;
+  }
 
   get baseUrl() {
     if (!this._baseUrl) {
