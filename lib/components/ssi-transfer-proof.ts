@@ -29,11 +29,7 @@ export class SsiTransferProof extends LitElement {
 
   async firstUpdated(changedProperties: Map<string, unknown>) {
     if (changedProperties.has("token")) {
-      await this._getConnection();
-      await this._checkIfActive();
-      if (!this.isActive) {
-        this.timer = window.setInterval(this._checkIfActive, 2000);
-      }
+      this._initConnection();
     }
   }
 
@@ -72,6 +68,16 @@ export class SsiTransferProof extends LitElement {
               Wallet hinzuzufügen.
             </p>
           </div>
+          <button
+            id="again"
+            @click="${this._handleAgainClicked}"
+            title="Nachweis nochmal ausstellen"
+          >
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9Imx1Y2lkZSBsdWNpZGUtcm90YXRlLWNjdyI+PHBhdGggZD0iTTMgMTJhOSA5IDAgMSAwIDktOSA5Ljc1IDkuNzUgMCAwIDAtNi43NCAyLjc0TDMgOCIvPjxwYXRoIGQ9Ik0zIDN2NWg1Ii8+PC9zdmc+"
+              alt=""
+            />
+          </button>
           <slot></slot>
         </ssi-card>
       `;
@@ -142,6 +148,14 @@ export class SsiTransferProof extends LitElement {
     `;
   }
 
+  private _initConnection = async () => {
+    await this._getConnection();
+    await this._checkIfActive();
+    if (!this.isActive) {
+      this.timer = window.setInterval(this._checkIfActive, 2000);
+    }
+  };
+
   private _checkIfActive = async () => {
     if (this.currentConnection) {
       const { active } = await fetch(
@@ -195,8 +209,18 @@ export class SsiTransferProof extends LitElement {
     }
   };
 
+  private _handleAgainClicked = async () => {
+    sessionStorage.removeItem(`connection-${this.token}`);
+    this.isError = false;
+    await this._initConnection();
+  };
+
   static styles = css`
     ${GLOBAL_CSS}
+
+    #root {
+      position: relative;
+    }
 
     .heading {
       font-size: 1.875rem;
@@ -282,6 +306,28 @@ export class SsiTransferProof extends LitElement {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    #again {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      height: 28px;
+      width: 28px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    #again img {
+      opacity: 0.4;
+    }
+
+    #again:hover {
+      background-color: hsl(0 0 0% / 0.05);
     }
 
     @keyframes rotate {
