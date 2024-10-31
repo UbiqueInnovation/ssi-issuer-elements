@@ -43,7 +43,7 @@ config.init({ baseUrl: "https://base.url" });
 // web component
 import "@ubique-innovation/ssi-issuer-elements/transfer-proof";
 
-<ssi-transfer-proof token="your-token">
+<ssi-transfer-proof token="your-token" credentialType="ACAPY">
   <a href="/">
     <button>Fertig</button>
   </a>
@@ -54,7 +54,7 @@ import "@ubique-innovation/ssi-issuer-elements/transfer-proof";
 // react
 import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
-<SsiTransferProof token="your-token">
+<SsiTransferProof token="your-token" credentialType="ACAPY">
   <a href="/">
     <button>Fertig</button>
   </a>
@@ -63,9 +63,10 @@ import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
 #### Attributes
 
-| name    | type     | default | required | description                                 |
-| ------- | -------- | ------- | -------- | ------------------------------------------- |
-| `token` | `string` | –       | yes      | the token that is used to create the invite |
+| name             | type                   | default   | required | description                                 |
+| ---------------- | ---------------------- | --------- | -------- | ------------------------------------------- |
+| `token`          | `string`               | –         | yes      | the token that is used to create the invite |
+| `credentialType` | `"ACAPY" \| "OID4VCI"` | `"ACAPY"` | No       | An optional credential type.                |
 
 #### Slot
 
