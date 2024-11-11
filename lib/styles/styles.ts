@@ -36,6 +36,10 @@ export const GLOBAL_CSS = css`
     max-width: 100%;
   }
 
+  canvas {
+    image-rendering: pixelated;
+  }
+
   input,
   button,
   textarea,
