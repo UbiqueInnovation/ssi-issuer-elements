@@ -12,9 +12,6 @@ export const GLOBAL_CSS = css`
   }
 
   #root {
-    --border: 220 13% 91%;
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
     font-family: inherit;

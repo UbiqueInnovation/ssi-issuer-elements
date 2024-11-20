@@ -17,13 +17,10 @@ export class SsiCard extends LitElement {
 
     .card {
       background: white;
-      border: 1px solid hsl(var(--border));
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
       padding: 1rem;
-      border-radius: 0.5rem;
-      box-shadow: var(--shadow);
     }
   `;
 }
