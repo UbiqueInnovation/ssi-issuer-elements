@@ -17,8 +17,7 @@ export const GLOBAL_CSS = css`
 
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
-    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-family: inherit;
     font-feature-settings: normal;
     font-variation-settings: normal;
     -webkit-tap-highlight-color: transparent;
@@ -55,5 +54,10 @@ export const GLOBAL_CSS = css`
   h5,
   h6 {
     overflow-wrap: break-word;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
   }
 `;
