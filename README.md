@@ -63,14 +63,15 @@ import { SsiTransferProof } from "@ubique-innovation/ssi-issuer-elements/react";
 
 #### Attributes
 
-| name             | type                   | default      | required | description                                           |
-| ---------------- | ---------------------- | ------------ | -------- | ----------------------------------------------------- |
-| `token`          | `string`               | –            | yes      | the token that is used to create the invite           |
-| `credentialType` | `"ACAPY" \| "OID4VCI"` | `"ACAPY"`    | No       | An optional credential type.                          |
-| `qrCodeLogoSrc`  | `string`               | ssimply Logo | No       | An optional logo src (dataURI or path).               |
-| `belowQrCodeSrc` | `string`               | ssimply Logo | No       | An optional below QR-Code logo src (dataURI or path). |
-| `issuerSlug`     | `string`               | –            | No       | An optional issuerSlug.                               |
-| `walletName`     | `string`               | `"ssimply"`  | No       | An optional wallet name.                              |
+| name                 | type                   | default      | required | description                                           |
+| -------------------- | ---------------------- | ------------ | -------- | ----------------------------------------------------- |
+| `token`              | `string`               | –            | yes      | the token that is used to create the invite           |
+| `credentialType`     | `"ACAPY" \| "OID4VCI"` | `"ACAPY"`    | No       | An optional credential type.                          |
+| `qrCodeLogoSrc`      | `string`               | ssimply Logo | No       | An optional logo src (dataURI or path).               |
+| `belowQrCodeSrc`     | `string`               | ssimply Logo | No       | An optional below QR-Code logo src (dataURI or path). |
+| `hideBelowQrCodeImg` | `boolean`              | `false`      | No       | An optional boolean to hide image below QR-Code       |
+| `issuerSlug`         | `string`               | –            | No       | An optional issuerSlug.                               |
+| `walletName`         | `string`               | `"ssimply"`  | No       | An optional wallet name.                              |
 
 #### Slot
 
